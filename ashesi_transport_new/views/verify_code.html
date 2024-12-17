@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Reset Code</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            background: url('../img/driver_image.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <div class="form-container">
+            <h2 class="mb-4">Verify Reset Code</h2>
+            <form id="verifyCodeForm">
+                <div class="form-group">
+                    <label for="resetCode">Enter Reset Code:</label>
+                    <input type="text" class="form-control" id="resetCode" name="reset_code" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Verify Code</button>
+            </form>
+            <form id="newPasswordForm" style="display:none;">
+                <div class="form-group">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" class="form-control" id="newPassword" name="new_password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // AJAX form submission for Verify Code
+        $('#verifyCodeForm').submit(function(event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '../actions/verify_reset_code.php',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    try {
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Code verified!',
+                                text: res.message,
+                            });
+                            $('#verifyCodeForm').hide();
+                            $('#newPasswordForm').show();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Invalid JSON response:', response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'An error occurred. Please try again.',
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX error:', xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'An error occurred. Please try again.',
+                    });
+                }
+            });
+        });
+
+        // AJAX form submission for Reset Password
+        $('#newPasswordForm').submit(function(event) {
+            event.preventDefault();
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '../actions/reset_password.php',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    try {
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Password reset successful!',
+                                text: res.message,
+                            }).then(() => {
+                                window.location.href = '../views/login.html';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Invalid JSON response:', response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'An error occurred. Please try again.',
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX error:', xhr.responseText);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'An error occurred. Please try again.',
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

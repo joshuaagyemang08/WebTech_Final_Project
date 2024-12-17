@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            background: url('../img/pexels-cottonbro-4620862.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        .btn-custom {
+            background-color: #ad3537;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-custom:hover {
+            background-color: #922d2f;
+            color: white;
+        }
+
+        .form-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #ad3537;
+        }
+
+        .form-group label {
+            color: #333;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ad3537;
+            margin-bottom: 15px;
+        }
+
+        .form-footer {
+            margin-top: 20px;
+        }
+
+        .form-footer a {
+            color: #ad3537;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ad3537;">
+            <a class="navbar-brand" href="#">
+                <img src="../img/logo.jpg" alt="Logo" style="height: 40px;">
+                <span>CAMPUS RIDE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="../index.html" class="btn btn-custom mx-2"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="login.html" class="btn btn-custom mx-2"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-custom dropdown-toggle mx-2" id="moreBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i> More
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreBtn">
+                            <a href="../views/about.html" class="dropdown-item"><i class="fas fa-info-circle"></i> About Us</a>
+                            <a href="../views/policies.html" class="dropdown-item"><i class="fas fa-file-alt"></i> Policies</a>
+                            <a href="../views/support.html" class="dropdown-item"><i class="fas fa-envelope"></i> Support</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container mt-5">
+        <div class="form-container text-center">
+            <h2 class="form-title">Register</h2>
+            <p>Select the type of registration:</p>
+            <button class="btn btn-primary mx-2" onclick="openModal('driverModal')">Driver</button>
+            <button class="btn btn-secondary mx-2" onclick="openModal('studentStaffModal')">Student or Staff</button>
+        </div>
+    </main>
+
+    <!-- Driver Registration Modal -->
+    <div id="driverModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('driverModal')">&times;</span>
+            <h5>Driver Registration</h5>
+            <form id="driverRegisterForm">
+                <div class="form-group">
+                    <label for="driverName">Name:</label>
+                    <input type="text" class="form-control" id="driverName" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverEmail">Email:</label>
+                    <input type="email" class="form-control" id="driverEmail" name="email" required>
+                </div>
+                <div class="form-group password-container">
+                    <label for="driverPassword">Password:</label>
+                    <input type="password" class="form-control" id="driverPassword" name="password" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('driverPassword')"></i>
+                </div>
+                <div class="form-group">
+                    <label for="driverContactNumber">Contact Number (e.g., 0245876597):</label>
+                    <input type="text" class="form-control" id="driverContactNumber" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleType">Vehicle Type:</label>
+                    <select class="form-control" id="vehicleType" name="vehicle_type" required>
+                        <option value="car">Car</option>
+                        <option value="motorcycle">Motorcycle</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="licensePlate">License Plate:</label>
+                    <input type="text" class="form-control" id="licensePlate" name="license_plate" required>
+                </div>
+                <button type="submit" class="btn btn-custom btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Student/Staff Registration Modal -->
+    <div id="studentStaffModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('studentStaffModal')">&times;</span>
+            <h5>Student/Staff Registration</h5>
+            <form id="studentStaffRegisterForm">
+                <div class="form-group">
+                    <label for="ashesiId">Ashesi ID:</label>
+                    <input type="text" class="form-control" id="ashesiId" name="ashesi_id" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentStaffName">Name:</label>
+                    <input type="text" class="form-control" id="studentStaffName" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentStaffEmail">Ashesi Email:</label>
+                    <input type="email" class="form-control" id="studentStaffEmail" name="email" required>
+                </div>
+                <div class="form-group password-container">
+                    <label for="studentStaffPassword">Password:</label>
+                    <input type="password" class="form-control" id="studentStaffPassword" name="password" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePasswordVisibility('studentStaffPassword')"></i>
+                </div>
+                <div class="form-group">
+                    <label for="studentStaffContactNumber">Contact Number (e.g., 0245876597):</label>
+                    <input type="text" class="form-control" id="studentStaffContactNumber" name="phone_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentStaffUserType">User Type:</label>
+                    <select class="form-control" id="studentStaffUserType" name="user_type" required>
+                        <option value="student">Student</option>
+                        <option value="staff">Staff</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-custom btn-block">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Function to toggle password visibility
+        window.togglePasswordVisibility = function(passwordFieldId) {
+            const passwordField = document.getElementById(passwordFieldId);
+            const toggleIcon = passwordField.nextElementSibling;
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        };
+
+        // Function to open modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        // Function to close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function validateEmail(email, userType) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(String(email).toLowerCase())) {
+                return false;
+            }
+            if (userType === 'driver' && !email.endsWith('@gmail.com')) {
+                return false;
+            }
+            if (userType === 'user' && !email.endsWith('@ashesi.edu.gh')) {
+                return false;
+            }
+            return true;
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8 && /[a-zA-Z]/.test(password);
+        }
+
+        function validatePhoneNumber(phoneNumber) {
+            return phoneNumber.length === 10 && /^[0-9]+$/.test(phoneNumber);
+        }
+
+        function showError(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                text: message
+            });
+        }
+
+        function isValidJSON(response) {
+            try {
+                JSON.parse(response);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // AJAX form submission for Driver Registration
+        $('#driverRegisterForm').submit(function(event) {
+            event.preventDefault();
+            const name = $('#driverName').val();
+            const email = $('#driverEmail').val();
+            const password = $('#driverPassword').val();
+            const phoneNumber = $('#driverContactNumber').val();
+            const vehicleType = $('#vehicleType').val();
+            const licensePlate = $('#licensePlate').val();
+
+            if (!name || !email || !password || !phoneNumber || !vehicleType || !licensePlate) {
+                showError('All fields are required.');
+                return;
+            }
+
+            if (!validateEmail(email, 'driver')) {
+                showError('Please enter a valid Gmail address.');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                showError('Password must be at least 8 characters long and contain at least one letter.');
+                return;
+            }
+
+            if (!validatePhoneNumber(phoneNumber)) {
+                showError('Phone number must be exactly 10 digits.');
+                return;
+            }
+
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '../actions/register_driver.php',
+                type: 'POST',
+                data: formData,
+                success: function(data) {
+                    if (isValidJSON(data)) {
+                        const res = JSON.parse(data);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registration successful!',
+                                text: res.message,
+                            }).then(() => {
+                                closeModal('driverModal');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Invalid server response. Please try again.',
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'An error occurred. Please try again.',
+                    });
+                }
+            });
+        });
+
+        // AJAX form submission for Student/Staff Registration
+        $('#studentStaffRegisterForm').submit(function(event) {
+            event.preventDefault();
+            const ashesiId = $('#ashesiId').val();
+            const name = $('#studentStaffName').val();
+            const email = $('#studentStaffEmail').val();
+            const password = $('#studentStaffPassword').val();
+            const phoneNumber = $('#studentStaffContactNumber').val();
+            const userType = $('#studentStaffUserType').val();
+
+            if (!ashesiId || !name || !email || !password || !phoneNumber || !userType) {
+                showError('All fields are required.');
+                return;
+            }
+
+            if (!validateEmail(email, 'user')) {
+                showError('Please enter a valid Ashesi email address.');
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                showError('Password must be at least 8 characters long and contain at least one letter.');
+                return;
+            }
+
+            if (!validatePhoneNumber(phoneNumber)) {
+                showError('Phone number must be exactly 10 digits.');
+                return;
+            }
+
+            const formData = $(this).serialize();
+            $.ajax({
+                url: '../actions/register_user.php',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (isValidJSON(response)) {
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registration successful!',
+                                text: res.message,
+                            }).then(() => {
+                                closeModal('studentStaffModal');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Invalid server response. Please try again.',
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'An error occurred. Please try again.',
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

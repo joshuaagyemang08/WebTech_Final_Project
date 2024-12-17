@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booked Rides</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            background: url('../img/driver_image.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ride-info {
+            margin-bottom: 20px;
+        }
+
+        .message-box {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="bg-primary text-white p-3">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+                <img src="../img/logo.jpg" alt="Logo" class="navbar-logo" style="height: 40px;">
+                <span>Campus Ride</span>
+            </a>
+            <div class="ml-auto">
+                <a href="main_page.html" class="btn btn-light mx-2"><i class="fas fa-home"></i> Home</a>
+                <button class="btn btn-light mx-2" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </nav>
+    </header>
+    <main class="container mt-5">
+        <div class="content" id="mainContent">
+            <!-- Booked rides will be dynamically loaded here -->
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Check if user is logged in
+            const userType = localStorage.getItem('userType');
+            if (!userType || userType !== 'user') {
+                window.location.href = '../login/login.html';
+            }
+
+            // Load booked rides
+            function loadBookedRides() {
+                $.ajax({
+                    url: '../actions/get_booked_rides.php',
+                    type: 'GET',
+                    success: function (response) {
+                        const rides = JSON.parse(response);
+                        let content = '<h3>Booked Rides</h3>';
+                        rides.forEach(ride => {
+                            content += `
+                                <div class="ride-info card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Ride ID: ${ride.ride_id}</h5>
+                                        <p class="card-text">Driver: ${ride.driver_name}</p>
+                                        <p class="card-text">Pickup: ${ride.pickup_location}</p>
+                                        <p class="card-text">Dropoff: ${ride.dropoff_location}</p>
+                                        <p class="card-text">Status: ${ride.ride_status}</p>
+                                        <button class="btn btn-danger cancel-ride-btn" data-ride-id="${ride.ride_id}">Cancel Ride</button>
+                                        <div class="message-box">
+                                            <h6>Messages</h6>
+                                            <div class="messages" id="messages-${ride.ride_id}">
+                                                <!-- Messages will be dynamically loaded here -->
+                                            </div>
+                                            <textarea class="form-control reply-message" placeholder="Enter your message"></textarea>
+                                            <button class="btn btn-primary send-message-btn" data-ride-id="${ride.ride_id}" data-recipient-id="${ride.driver_id}">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        $('#mainContent').html(content);
+                    }
+                });
+            }
+
+            loadBookedRides();
+
+            // Cancel ride
+            $(document).on('click', '.cancel-ride-btn', function () {
+                const rideId = $(this).data('ride-id');
+                $.ajax({
+                    url: '../actions/cancel_ride.php',
+                    type: 'POST',
+                    data: { ride_id: rideId },
+                    success: function (response) {
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ride cancelled successfully!',
+                                text: res.message,
+                            }).then(() => {
+                                loadBookedRides();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'An error occurred. Please try again.',
+                        });
+                    }
+                });
+            });
+
+            // Send message
+            $(document).on('click', '.send-message-btn', function () {
+                const rideId = $(this).data('ride-id');
+                const message = $(this).siblings('.reply-message').val();
+                const recipientId = $(this).data('recipient-id'); // Assuming recipient ID is stored in a data attribute
+                console.log(`Sending message: ${message} for ride ID: ${rideId}`);
+                if (message.trim() === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Message cannot be empty.',
+                    });
+                    return;
+                }
+                if (!recipientId) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Recipient ID is missing.',
+                    });
+                    return;
+                }
+                $.ajax({
+                    url: '../actions/send_message.php',
+                    type: 'POST',
+                    data: { ride_id: rideId, message: message, recipient_id: recipientId },
+                    success: function (response) {
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Message sent successfully!',
+                                text: res.message,
+                            }).then(() => {
+                                loadMessages(rideId);
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'An error occurred. Please try again.',
+                        });
+                    }
+                });
+            });
+
+            // Load messages for a ride
+            function loadMessages(rideId) {
+    console.log(`Loading messages for ride ID: ${rideId}`);
+    $.ajax({
+        url: '../actions/get_messages.php',
+        type: 'GET',
+        data: { ride_id: rideId },
+        success: function (response) {
+            try {
+                const messages = JSON.parse(response);
+                let messageContent = '';
+                const currentUserId = localStorage.getItem('user_id'); // Use session information
+                messages.forEach(message => {
+                    const messageClass = message.sender_id == currentUserId ? 'me' : 'other';
+                    const senderName = message.sender_id == currentUserId ? 'me' : message.sender_name;
+                    messageContent += `<div class="message ${messageClass}"><strong>${senderName}:</strong> ${message.message_text}</div>`;
+                });
+                $(`#messages-${rideId}`).html(messageContent);
+                $(`#messages-${rideId}`).css('display', 'block'); // Ensure messages are displayed
+            } catch (e) {
+                console.error('Error parsing JSON response:', e);
+                console.error('Response:', response);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'An error occurred while loading messages. Please try again.',
+                });
+            }
+        },
+        error: function (error) {
+            console.error(`Error loading messages for ride ID: ${rideId}`, error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'An error occurred while loading messages. Please try again.',
+            });
+        }
+    });
+}
+
+            // Logout
+            $('#logoutBtn').click(function () {
+                $.ajax({
+                    url: '../actions/logout_user.php',
+                    type: 'POST',
+                    success: function () {
+                        localStorage.removeItem('userType');
+                        window.location.href = '../login/login.html';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

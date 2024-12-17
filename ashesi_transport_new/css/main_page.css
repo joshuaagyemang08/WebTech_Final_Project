@@ -1,0 +1,182 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Background Image */
+  body {
+    background: url('../img/pexels-cottonbro-4620862.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* Header Styling */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.7); /* Transparent overlay on header */
+  }
+  
+  /* Logo Styling */
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  /* Navigation Buttons */
+  .nav-buttons {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .nav-buttons button {
+    background-color: #3a7bd5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .nav-buttons .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  
+  .nav-buttons .dropdown-content a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .nav-buttons .dropdown-content a:hover {
+    background-color: #ddd;
+  }
+  
+  .nav-buttons button:hover + .dropdown-content,
+  .nav-buttons .dropdown-content:hover {
+    display: block;
+  }
+  
+  /* Search Bar Styling */
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+  }
+  
+  .search-bar button {
+    background-color: #3a7bd5;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  /* Profile Section */
+  .profile {
+    position: relative;
+  }
+  
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile-dropdown a {
+    color: #ffffff;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+  }
+  
+  .profile:hover .profile-dropdown {
+    display: block;
+  }
+  
+  /* Main Content */
+  #mainContent {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    margin: 20px;
+    color: white;
+  }
+  
+  /* Driver and Rider Profiles */
+  .profile-card {
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .profile-card button {
+    background-color: #3a7bd5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+  
+  .profile-card button:hover {
+    background-color: #29468a;
+  }
+
+  

@@ -1,0 +1,201 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../img/driver_image.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+}
+
+/* Navbar Styling */
+.navbar {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0; /* Ensure the navbar starts from the left edge */
+    z-index: 1000;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-title {
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.navbar .home-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.navbar .home-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Form Container */
+form {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-top: 100px; /* Add margin to avoid overlap with fixed header */
+}
+
+/* Form Heading */
+form h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #444;
+}
+
+/* Labels and Input Fields */
+label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #007bff;
+}
+
+/* Button Styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Radio Buttons for User Type */
+input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+label[for="userType"] {
+    margin-bottom: 5px;
+}
+
+/* Links and Paragraph Styling */
+p {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 14px;
+    color: #666;
+}
+
+p a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    form {
+        padding: 1.5rem;
+    }
+
+    form h2 {
+        font-size: 20px;
+    }
+    
+    button[type="submit"],
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        font-size: 14px;
+    }
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: rgb(7, 6, 6); /* Set the color of the eye icon to white */
+}
+
+input[type="file"] {
+    color: white; /* Set the color of the "No file chosen" text to white */
+}

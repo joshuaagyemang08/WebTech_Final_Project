@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../img/pexels-cottonbro-4620862.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 0.5em;
+            color: white;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background: transparent; /* Make the background transparent */
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between; /* Align buttons to the right */
+            align-items: center;
+            padding: 0.5em 1em;
+            background-color: transparent; /* Make the background transparent */
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+            margin-right: auto; /* Shift the logo to the left */
+        }
+        .top-nav .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .top-nav .logo span {
+            font-family: 'Arial', sans-serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+            margin-left: auto; /* Shift the buttons to the right */
+        }
+        .top-nav .nav-links a, .top-nav .nav-links .dropdown button {
+            color: white;
+            text-decoration: none;
+            font-size: 0.8em; /* Reduce font size */
+            margin: 0 0.3em; /* Reduce margin */
+            background-color: #ad3537;
+            padding: 0.2em 0.6em; /* Reduce padding */
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .top-nav .nav-links a:hover, .top-nav .nav-links .dropdown button:hover {
+            background-color: #922d2f;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(173, 53, 55, 0.9); /* Use the school's color with transparency */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            width: 200px; /* Adjust width to fit content */
+            left: 0; /* Align dropdown to the left */
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-content a:hover {
+            background-color: #922d2f;
+        }
+        .dropdown.show .dropdown-content {
+            display: block;
+        }
+        .policy-content {
+            display: none;
+            padding: 1.5em;
+            max-width: 800px;
+            margin: 6em auto 2em; /* Adjust margin to center content */
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .policy-content.active {
+            display: block; /* Show the active policy */
+        }
+        h1 {
+            color: #ad3537;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+        h2 {
+            color: #ad3537;
+            margin-top: 1em;
+        }
+        p {
+            line-height: 1.4;
+            margin-bottom: 1em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .contact-section {
+            text-align: center;
+            margin-top: 2em;
+            color: #333; /* Change color */
+        }
+        .contact-section button {
+            background-color: #ad3537;
+            color: white;
+            padding: 6px 12px; /* Reduce padding */
+            font-size: 0.8em; /* Reduce font size */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .contact-section button:hover {
+            background-color: #922d2f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="top-nav">
+            <div class="logo" style="margin-left: 0;">
+                <img src="../img/logo.jpg" alt="Logo">
+                <span>CAMPUS RIDE</span>
+            </div>
+            <div class="nav-links">
+                <div class="dropdown">
+                    <button onclick="toggleDropdown()"><i class="fas fa-file-alt"></i> Policies</button>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <a href="#" onclick="showPolicy('privacyPolicy')">Privacy Policy</a>
+                        <a href="#" onclick="showPolicy('termsOfService')">Terms of Service</a>
+                        <a href="#" onclick="showPolicy('cookiePolicy')">Cookie Policy</a>
+                    </div>
+                </div>
+                <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+                <a href="../login/login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="../login/register.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+            </div>
+        </nav>
+    </header>
+    <div id="privacyPolicy" class="policy-content active">
+        <h2>Privacy Policy</h2>
+        <p>We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and disclose your information when you use our services.</p>
+        <p><strong>Information Collection:</strong> We collect information you provide directly to us, such as when you create an account, request a ride, or contact customer support. This may include your name, email address, phone number, and payment information.</p>
+        <p><strong>Information Use:</strong> We use your information to provide and improve our services, process transactions, communicate with you, and for security purposes.</p>
+        <p><strong>Information Sharing:</strong> We do not share your personal information with third parties except as necessary to provide our services, comply with legal obligations, or protect our rights.</p>
+        <div class="contact-section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or concerns about our policies, please contact us at support@campusride.com.</p>
+            <button onclick="location.href='mailto:support@campusride.com'">Contact Support</button>
+        </div>
+    </div>
+    <div id="termsOfService" class="policy-content">
+        <h2>Terms of Service</h2>
+        <p>By using our services, you agree to these Terms of Service. Please read them carefully.</p>
+        <p><strong>Account Creation:</strong> You must create an account to use our services. You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</p>
+        <p><strong>Service Use:</strong> You agree to use our services only for lawful purposes and in accordance with these terms. You must not use our services to engage in any illegal or harmful activities.</p>
+        <p><strong>Termination:</strong> We may terminate or suspend your account if you violate these terms or engage in any conduct that we deem harmful to our services or other users.</p>
+        <div class="contact-section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or concerns about our policies, please contact us at support@campusride.com.</p>
+            <button onclick="location.href='mailto:support@campusride.com'">Contact Support</button>
+        </div>
+    </div>
+    <div id="cookiePolicy" class="policy-content">
+        <h2>Cookie Policy</h2>
+        <p>We use cookies to enhance your experience on our website. By using our services, you consent to our use of cookies.</p>
+        <p><strong>What are Cookies:</strong> Cookies are small text files that are stored on your device when you visit a website. They help us remember your preferences and improve your experience.</p>
+        <p><strong>Types of Cookies:</strong> We use both session cookies (which expire when you close your browser) and persistent cookies (which remain on your device until you delete them).</p>
+        <p><strong>Managing Cookies:</strong> You can manage your cookie preferences through your browser settings. However, disabling cookies may affect your ability to use certain features of our services.</p>
+        <div class="contact-section">
+            <h2>Contact Us</h2>
+            <p>If you have any questions or concerns about our policies, please contact us at support@campusride.com.</p>
+            <button onclick="location.href='mailto:support@campusride.com'">Contact Support</button>
+        </div>
+    </div>
+    <script>
+        function toggleDropdown() {
+            document.getElementById('dropdownContent').classList.toggle('show');
+        }
+
+        function showPolicy(policyId) {
+            const policies = document.querySelectorAll('.policy-content');
+            policies.forEach(policy => {
+                policy.classList.remove('active');
+            });
+            document.getElementById(policyId).classList.add('active');
+        }
+
+        // Close dropdown if clicked outside
+        window.addEventListener('click', function(event) {
+            if (!event.target.matches('.dropdown button')) {
+                var dropdowns = document.getElementsByClassName('dropdown-content');
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

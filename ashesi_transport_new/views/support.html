@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('../img/support_image.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5em 1em;
+        }
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+        }
+        .top-nav .logo img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .top-nav .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        .top-nav .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin: 0 0.5em;
+            background-color: #ad3537;
+            padding: 0.3em 0.8em;
+            border-radius: 5px;
+        }
+        .top-nav .nav-links a:hover {
+            background-color: #922d2f;
+        }
+        section {
+            padding: 2em;
+            max-width: 800px;
+            margin: 6em auto 2em;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        h1 {
+            color: #ad3537;
+            text-align: center;
+            margin-bottom: 1em;
+        }
+        p {
+            line-height: 1.6;
+            margin-bottom: 1em;
+        }
+        .contact-info {
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .contact-info a {
+            color: #ad3537;
+            text-decoration: none;
+            display: block;
+            margin: 0.5em 0;
+        }
+        .social-media {
+            text-align: center;
+            margin-top: 2em;
+        }
+        .social-media a {
+            color: #ad3537;
+            margin: 0 0.5em;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
+        .social-media a span {
+            margin-left: 0.5em;
+            font-size: 1em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <div class="logo">
+            <img src="../img/logo.jpg" alt="Logo">
+            <span>CAMPUS RIDE</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="../login/login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="../login/register.html"><i class="fas fa-user-plus"></i> Sign Up</a>
+        </div>
+    </div>
+    <section>
+        <h1>Support</h1>
+        <p>If you need any assistance, feel free to reach out to us through any of the following methods:</p>
+        <div class="contact-info">
+            <a href="tel:+1234567890"><i class="fas fa-phone"></i> Call us: +1234567890</a>
+            <a href="mailto:support@campusride.com"><i class="fas fa-envelope"></i> Email us: support@campusride.com</a>
+            <a href="https://wa.me/1234567890" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp us: +1234567890</a>
+        </div>
+        <p>Follow us on social media to stay updated @campusride:</p>
+        <div class="social-media">
+            <a href="https://facebook.com/campusride" target="_blank"><i class="fab fa-facebook"></i><span>Facebook</span></a>
+            <a href="https://twitter.com/campusride" target="_blank"><i class="fab fa-twitter"></i><span>Twitter</span></a>
+            <a href="https://instagram.com/campusride" target="_blank"><i class="fab fa-instagram"></i><span>Instagram</span></a>
+            <a href="https://linkedin.com/company/campusride" target="_blank"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+        </div>
+        <p>We are here to make your transportation experience smooth and enjoyable. Thank you for choosing Campus Ride!</p>
+    </section>
+</body>
+</html>

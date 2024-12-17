@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Ride</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <header class="bg-primary text-white p-3">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+                <img src="../img/logo.jpg" alt="Logo" class="navbar-logo" style="height: 40px;">
+            </a>
+            <a href="../index.html" class="btn btn-light ml-auto">Home</a>
+            <button class="btn btn-light mx-2" id="bookedRidesBtn"><i class="fas fa-car"></i> Booked Rides</button>
+        </nav>
+    </header>
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container text-center">
+                    <h2 class="mb-4">Book a Ride</h2>
+                    <form id="bookRideForm">
+                        <div class="form-group">
+                            <label for="driverId">Select Driver:</label>
+                            <select class="form-control" id="driverId" name="driver_id" required>
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pickupLocation">Pickup Location:</label>
+                            <input type="text" class="form-control" id="pickupLocation" name="pickup_location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dropoffLocation">Dropoff Location:</label>
+                            <input type="text" class="form-control" id="dropoffLocation" name="dropoff_location" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message:</label>
+                            <textarea class="form-control" id="message" name="message" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Book Ride</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Fetch drivers and populate the select box
+            $.ajax({
+                url: '../actions/get_drivers.php',
+                type: 'GET',
+                success: function(response) {
+                    const drivers = JSON.parse(response);
+                    const driverSelect = $('#driverId');
+                    drivers.forEach(driver => {
+                        const option = $('<option></option>')
+                            .val(driver.driver_id)
+                            .text(`${driver.username} - ${driver.online_status ? 'Online' : 'Offline'} - ${driver.phone_number} - ${driver.vehicle_type} - ${driver.location}`);
+                        driverSelect.append(option);
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Failed to load drivers. Please try again.',
+                    });
+                }
+            });
+
+            // AJAX form submission for booking a ride
+            $('#bookRideForm').submit(function(event) {
+                event.preventDefault();
+                const formData = $(this).serialize();
+                const message = $('#message').val().trim();
+                if (message === '') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Message cannot be empty.',
+                    });
+                    return;
+                }
+                console.log(`Form data: ${formData}`);
+                $.ajax({
+                    url: '../actions/book_ride.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        console.log(`Response: ${response}`);
+                        const res = JSON.parse(response);
+                        if (res.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ride booked successfully!',
+                                text: `Driver Contact: ${res.driver_contact}`,
+                            }).then(() => {
+                                window.location.href = '../views/main_page.html';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: res.message,
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'An error occurred. Please try again.',
+                        });
+                    }
+                });
+            });
+
+            // Navigate to booked rides page
+            $('#bookedRidesBtn').click(function () {
+                window.location.href = 'booked_rides.html';
+            });
+        });
+    </script>
+</body>
+
+</html>

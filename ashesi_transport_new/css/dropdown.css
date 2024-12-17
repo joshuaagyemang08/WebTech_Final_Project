@@ -1,0 +1,27 @@
+/* Dropdown-specific styles */
+.dropdown {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    padding: 10px 0;
+}
+
+.dropdown.show {
+    display: flex;
+}
+
+.dropdown a {
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
